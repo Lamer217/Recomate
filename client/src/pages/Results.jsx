@@ -11,15 +11,25 @@ export default function Results() {
   const [imgSources, setImgSources] = useState({});
 
   useEffect(() => {
-    fetch(`http://localhost:5005/api/remote/similar/movies/${location.state}`)
-      // location.state being the query passed from the preferences page
+    // send the query to the TMDB first, to find a proper title
+    fetch(`http://localhost:5005/api/remote/movies/search/${location.state}`)
       .then(response => response.json())
-      .then(data => {
-        setMovies(data.Similar.Results);
-        setQuery(data.Similar.Info[0].Name);
-      })
+      .then(resultsArr => setQuery(resultsArr[0].title))
       .catch(err => console.error(err));
   }, [location.state]);
+
+  useEffect(() => {
+    if (query) {
+      fetch(`http://localhost:5005/api/remote/similar/movies/${query}`)
+        // location.state being the query passed from the preferences page
+        .then(response => response.json())
+        .then(data => {
+          setMovies(data.Similar.Results);
+          // setQuery(data.Similar.Info[0].Name);
+        })
+        .catch(err => console.error(err));
+    }
+  }, [query]);
 
   // Retrieving the posters when the movie is added to the movies state
   useEffect(() => {
@@ -43,7 +53,8 @@ export default function Results() {
                 [movie.Name]:
                   'https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg',
               }));
-        });
+        })
+        .catch(err => console.error(err));
     });
   }, [movies]);
 
@@ -53,7 +64,7 @@ export default function Results() {
       <h2>If you liked {query} you migh also like:</h2>
       {movies.map(movie => (
         <div className="movie-card" key={uid()}>
-          <img src={imgSources[movie.Name]} alt="poster" />
+          <img src={imgSources[movie.Name]} alt="poster" height={250} />
           <h5>{movie.Name}</h5>
         </div>
       ))}
