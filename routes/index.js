@@ -11,8 +11,8 @@ router.get('/', (req, res, next) => {
 const remoteApi = require('./remote');
 router.use('/remote', remoteApi);
 
-// Signup route prefix:
-const Signup = require('./signup');
-router.use('/signup', Signup);
+// Auth middleware route prefix:
+// const AuthMiddleware = require('./auth/middleware');
+// router.use('/auth/middleware', AuthMiddleware);
 
 module.exports = router;

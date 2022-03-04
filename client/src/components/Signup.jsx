@@ -12,7 +12,7 @@ export default function Signup() {
     console.log('handleSignup');
     if (passRep === password) {
       axios
-        .post('http://localhost:5005/api/signup', { username, password })
+        .post('http://localhost:5005/auth/signup', { username, password })
         .then(response => {
           if (response.status === 201) {
             console.log('New user created', response.data.user);
