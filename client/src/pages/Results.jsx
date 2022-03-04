@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { uid } from 'uid/single';
+import Navbar from '../components/Navbar';
 
 export default function Results() {
   const location = useLocation();
@@ -27,13 +28,10 @@ export default function Results() {
         .then(response => response.json())
         .then(moviesArr => {
           const posterArr = moviesArr
-            .filter(retrievedMovie => {
-              if (
+            .filter(
+              retrievedMovie =>
                 retrievedMovie.title.toLowerCase() === movie.Name.toLowerCase()
-              ) {
-                return retrievedMovie.poster_path;
-              }
-            })
+            )
             .map(item => item.poster_path);
           posterArr.length
             ? setImgSources(imgSources => ({
@@ -51,6 +49,7 @@ export default function Results() {
 
   return (
     <div>
+      <Navbar />
       <h2>If you liked {query} you migh also like:</h2>
       {movies.map(movie => (
         <div className="movie-card" key={uid()}>
