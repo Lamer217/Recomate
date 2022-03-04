@@ -11,4 +11,8 @@ router.get('/', (req, res, next) => {
 const remoteApi = require('./remote');
 router.use('/remote', remoteApi);
 
+// Signup route prefix:
+const Signup = require('./signup');
+router.use('/signup', Signup);
+
 module.exports = router;
