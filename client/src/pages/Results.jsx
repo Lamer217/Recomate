@@ -6,6 +6,8 @@ export default function Results() {
   const location = useLocation();
 
   const [movies, setMovies] = useState([]);
+  const [query, setQuery] = useState('');
+  const [imgSources, setImgSources] = useState({});
 
   useEffect(() => {
     fetch(`http://localhost:5005/api/remote/similar/movies/${location.state}`)
@@ -13,14 +15,48 @@ export default function Results() {
       .then(response => response.json())
       .then(data => {
         setMovies(data.Similar.Results);
+        setQuery(data.Similar.Info[0].Name);
       })
       .catch(err => console.error(err));
   }, [location.state]);
 
+  // Retrieving the posters when the movie is added to the movies state
+  useEffect(() => {
+    movies.forEach(movie => {
+      fetch(`http://localhost:5005/api/remote/movies/search/${movie.Name}`)
+        .then(response => response.json())
+        .then(moviesArr => {
+          const posterArr = moviesArr
+            .filter(retrievedMovie => {
+              if (
+                retrievedMovie.title.toLowerCase() === movie.Name.toLowerCase()
+              ) {
+                return retrievedMovie.poster_path;
+              }
+            })
+            .map(item => item.poster_path);
+          posterArr.length
+            ? setImgSources(imgSources => ({
+                ...imgSources,
+                [movie.Name]: `https://image.tmdb.org/t/p/w200${posterArr[0]}`,
+              }))
+            : setImgSources(imgSources => ({
+                ...imgSources,
+                [movie.Name]:
+                  'https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg',
+              }));
+        });
+    });
+  }, [movies]);
+
   return (
     <div>
+      <h2>If you liked {query} you migh also like:</h2>
       {movies.map(movie => (
-        <h5 key={uid()}>{movie.Name}</h5>
+        <div className="movie-card" key={uid()}>
+          <img src={imgSources[movie.Name]} alt="poster" />
+          <h5>{movie.Name}</h5>
+        </div>
       ))}
     </div>
   );
