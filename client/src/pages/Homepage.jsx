@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import Preferences from '../components/Preferences';
 import Signup from '../components/Signup';
+import Login from '../components/Login';
 
 export default function Homepage() {
   const [signup, setSignup] = useState(false);
+  const [login, setLogin] = useState(false);
 
   return (
     <>
       <h1>Recomate - helps you find what else is worth watching</h1>
       <div>
         {signup ? (
-          <Signup />
+          <Signup setSignup={setSignup} setLogin={setLogin} />
         ) : (
-          <>
-            <button>Login</button>
-            <button onClick={() => setSignup(!signup)}>Sign up</button>
-          </>
+          <button onClick={() => setSignup(!signup)}>Sign up</button>
         )}
-        {/* Login or signup here | Maybe as a separate components */}
+        {login ? (
+          <Login />
+        ) : (
+          <button onClick={() => setLogin(!login)}>Login</button>
+        )}
       </div>
       <button>Just let me see what else to watch</button>
       {/* ⬆ This will triger the preferences element to show ⬆ */}

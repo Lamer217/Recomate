@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const { isAuthenticated } = require('../middleware/middleware');
 
-// GET 'auth/verify' Used to verify JWT storet at the client
+// GET 'auth/verify' Used to verify JWT stored at the client
 
 router.get('/', isAuthenticated, (req, res, next) => {
-  /* If JWT token is valid the payload gets decoded by the
+  /* If JWT token is valid, the payload gets decoded by the
     isAuthenticated middleware and made available on 'req.payload' */
   console.log('req.payload', req.payload);
 

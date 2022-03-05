@@ -4,10 +4,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 router.post('/', (req, res, next) => {
-  const { user, password } = req.body;
+  const { username, password } = req.body;
 
   // Check for user & password to be provided
-  if (!user || !password) {
+  if (!username || !password) {
     res.status(400).json({ errMessage: 'Provide email and password.' });
     return;
   }
@@ -39,7 +39,7 @@ router.post('/', (req, res, next) => {
         );
 
         // Send the authToken as the response
-        res.status(200).json(authToken);
+        res.status(200).json({ authToken: authToken });
       } else {
         // If password is incorrect
         res.status(401).json({ errMessage: 'Failed to authenticate' });

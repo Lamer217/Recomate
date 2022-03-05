@@ -4,10 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { AuthProviderWrapper } from './context/authContext';
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <AuthProviderWrapper>
+      <App />
+    </AuthProviderWrapper>
   </BrowserRouter>,
   document.getElementById('root')
 );
