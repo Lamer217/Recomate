@@ -32,6 +32,7 @@ export default function Login({ setSignupForm, setLoginForm }) {
         // Getting to the predefined message from the backend
         const errMessage = err.response.data.errMessage;
         setMessage(errMessage);
+        console.error(err);
       });
   };
 

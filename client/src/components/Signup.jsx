@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
-
+import { AuthContext } from '../context/authContext';
 const BACKEND_URL = 'http://localhost:5005';
 
 export default function Signup({ setSignupForm, setLoginForm }) {
@@ -11,22 +10,30 @@ export default function Signup({ setSignupForm, setLoginForm }) {
   const [message, setMessage] = useState('');
   const [errMessage, setErrMessage] = useState('');
 
-  //   const navigate = useNavigate();
+  const { storeToken, authenticateUser } = useContext(AuthContext);
 
   const handleSignup = e => {
+    // Prevent page reload on form submission
     e.preventDefault();
-    console.log('handleSignup');
+
+    // Assign request body
     const reqBody = { username, password };
+
+    // Check if user had entered an intended password
     if (passRep === password) {
+      // If yes - post the req.body to the backend route
       axios
         .post(`${BACKEND_URL}/auth/signup`, reqBody)
         .then(response => {
+          // Backend should respond with the 'created' code
           if (response.status === 201) {
-            console.log('New user created', response.data.user);
-            /* If the user is created -> hide the signup component
-           and display the login component */
-            setLoginForm(true);
-            setSignupForm(false);
+            // And with the JWT token for an immediate new user authorisation
+            // First we store the token on the client
+            storeToken(response.data.authToken);
+
+            // After that we can authenticate the new user
+            // so that it is considered logged in
+            authenticateUser();
           }
         })
         .catch(err => {

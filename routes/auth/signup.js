@@ -20,7 +20,9 @@ router.post('/', (req, res, next) => {
   to the user trying to register on the front-end */
   User.findOne({ username }).then(retrievedUser => {
     if (retrievedUser) {
-      res.status(400).json({ errMessage: 'Username already taken' });
+      res.status(400).json({
+        errMessage: 'Username already taken. Failed to register new user',
+      });
       return;
     }
   });
@@ -36,10 +38,22 @@ router.post('/', (req, res, next) => {
       const { username, _id } = createdUser;
       // User object will be used as a JWT payload
       const user = { _id, username };
-      // respond to client with user object
-      res.status(201).json({ user });
+
+      // Create and sign the token
+      // (so the user doesn't have to login after the registration)
+      const authToken = jwt.sign(
+        user, // Token payload
+        process.env.TOKEN_SECRET, // Secret to sign the token
+        { algorithm: 'HS256', expiresIn: '6h' }
+      );
+
+      // Send the auth token as the response
+      res.status(201).json({ authToken: authToken });
     })
-    .catch(err => next(err));
+    .catch(err => {
+      res.status(500).json({ errMessage: 'Internal server error' });
+      next(err);
+    });
 });
 
 module.exports = router;
