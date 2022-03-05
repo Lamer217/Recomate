@@ -4,11 +4,12 @@ import axios from 'axios';
 
 const BACKEND_URL = 'http://localhost:5005';
 
-export default function Signup({ setSignup, setLogin }) {
+export default function Signup({ setSignupForm, setLoginForm }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passRep, setPassRep] = useState('');
   const [message, setMessage] = useState('');
+  const [errMessage, setErrMessage] = useState('');
 
   //   const navigate = useNavigate();
 
@@ -17,25 +18,37 @@ export default function Signup({ setSignup, setLogin }) {
     console.log('handleSignup');
     const reqBody = { username, password };
     if (passRep === password) {
-      axios.post(`${BACKEND_URL}/auth/signup`, reqBody).then(response => {
-        if (response.status === 201) {
-          console.log('New user created', response.data.user);
-          /* If the user is created -> hide the signup component
+      axios
+        .post(`${BACKEND_URL}/auth/signup`, reqBody)
+        .then(response => {
+          if (response.status === 201) {
+            console.log('New user created', response.data.user);
+            /* If the user is created -> hide the signup component
            and display the login component */
-          setLogin(true);
-          setSignup(false);
-        }
-      });
+            setLoginForm(true);
+            setSignupForm(false);
+          }
+        })
+        .catch(err => {
+          const errorMessage = err.response.data.errMessage;
+          setErrMessage(errorMessage);
+          console.error(err);
+        });
     } else {
       setMessage("Passwords don't match");
     }
   };
 
+  const handleLogin = () => {
+    setSignupForm(false);
+    setLoginForm(true);
+  };
+
   return (
     <div className="signup-card">
       <h2>Sign up</h2>
+      {errMessage && <span>{errMessage}</span>}
       <form onKeyPress={e => e.key === 'Enter' && handleSignup(e)}>
-        {/* <form onSubmit={console.log('Submit')}> */}
         <label htmlFor="username">Username:</label>
         <input
           type="text"
@@ -61,6 +74,8 @@ export default function Signup({ setSignup, setLogin }) {
           required
         />
       </form>
+      <p>Already have an account?</p>
+      <button onClick={handleLogin}>Log in</button>
     </div>
   );
 }

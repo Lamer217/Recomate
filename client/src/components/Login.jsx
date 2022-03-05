@@ -4,7 +4,7 @@ import { AuthContext } from '../context/authContext';
 
 const BACKEND_URL = 'http://localhost:5005';
 
-export default function Login() {
+export default function Login({ setSignupForm, setLoginForm }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -35,6 +35,11 @@ export default function Login() {
       });
   };
 
+  const handleSignup = () => {
+    setLoginForm(false);
+    setSignupForm(true);
+  };
+
   return (
     <div className="login-card">
       <h2>Login</h2>
@@ -57,6 +62,8 @@ export default function Login() {
         />
       </form>
       {message && <p>{message}</p>}
+      <p>Don't have an account yet?</p>
+      <button onClick={handleSignup}>Sign Up for Free</button>
     </div>
   );
 }
