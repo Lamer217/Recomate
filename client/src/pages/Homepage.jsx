@@ -3,6 +3,7 @@ import Preferences from '../components/Preferences';
 import Signup from '../components/Signup';
 import Login from '../components/Login';
 import { AuthContext } from '../context/authContext';
+import IsAnon from '../components/IsAnon';
 
 export default function Homepage() {
   const [signupForm, setSignupForm] = useState(false);
@@ -17,7 +18,7 @@ export default function Homepage() {
       {isLoggedIn ? (
         <Preferences />
       ) : (
-        <>
+        <IsAnon>
           <div>
             {signupForm ? (
               <Signup
@@ -43,7 +44,7 @@ export default function Homepage() {
             )}
           </div>
           <button>Just let me see what else to watch</button>
-        </>
+        </IsAnon>
       )}
     </>
   );
