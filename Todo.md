@@ -8,3 +8,5 @@
   - Create user model ✅
   - create signup components ✅
   - add signup route ✅
+  - ✅ If user is signed in save the liked films to the user db document
+  - If the user is logged in and opens the homepage he should be redirected to the results page as he already has liked films in his profile

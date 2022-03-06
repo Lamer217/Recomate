@@ -8,13 +8,14 @@ const userSchema = new Schema(
       unique: true,
       required: true,
       minLength: 6,
+      maxlength: 16,
     },
     password: {
       type: String,
       required: true,
       minlength: 8,
     },
-    watchedFilms: {
+    likedFilms: {
       type: Array,
     },
   }

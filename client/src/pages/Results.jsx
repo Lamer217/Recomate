@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { uid } from 'uid/single';
+import { AuthContext } from '../context/authContext';
+import axios from 'axios';
+const BACKEND_URL = 'http://localhost:5005 ';
 
 export default function Results() {
   const location = useLocation();
+  const { user, isLoggedIn } = useContext(AuthContext);
 
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState('');
@@ -27,6 +31,17 @@ export default function Results() {
           // setQuery(data.Similar.Info[0].Name);
         })
         .catch(err => console.error(err));
+      // If the user is logged in and if there is a user object in the context
+      // Add the query (title of a liked movie) to the user document in DB
+      if (user && isLoggedIn) {
+        /* Have to create a backend route to add the query
+         to the user document in DB */
+        const requestBody = { id: user._id, filmTitle: query };
+        axios
+          .put(`http://localhost:5005/account/add-film`, requestBody)
+          .then()
+          .catch(err => console.error(err));
+      }
     }
   }, [query]);
 
