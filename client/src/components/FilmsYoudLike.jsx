@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { uid } from 'uid/single';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function FilmsYoudLike({ query }) {
   const [movies, setMovies] = useState([]);
@@ -27,13 +28,13 @@ export default function FilmsYoudLike({ query }) {
         axios
           .get(`/api/remote/movies/search/${movie.Name}`)
           .then(response => {
-            const posterArr = response.data
-              .filter(
-                retrievedMovie =>
-                  retrievedMovie.title.toLowerCase() ===
-                  movie.Name.toLowerCase()
-              )
-              .map(item => item.poster_path);
+            const tmdbFilmsArr = response.data.filter(
+              retrievedMovie =>
+                retrievedMovie.title.toLowerCase() === movie.Name.toLowerCase()
+            );
+            movie.tmdbObj = tmdbFilmsArr[0];
+            console.log(movie);
+            const posterArr = tmdbFilmsArr.map(item => item.poster_path);
             posterArr.length
               ? setImgSources(imgSources => ({
                   ...imgSources,
@@ -41,8 +42,7 @@ export default function FilmsYoudLike({ query }) {
                 }))
               : setImgSources(imgSources => ({
                   ...imgSources,
-                  [movie.Name]:
-                    'https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg',
+                  [movie.Name]: `${window.location.origin}/default_backdrop.jpg`,
                 }));
           })
           .catch(err => console.error(err));
@@ -54,10 +54,12 @@ export default function FilmsYoudLike({ query }) {
     <div>
       <h2>Here's what the AI thinks you'd like:</h2>
       {movies.map(movie => (
-        <div className="movie-card" key={uid()}>
-          <img src={imgSources[movie.Name]} alt="poster" height={250} />
-          <h5>{movie.Name}</h5>
-        </div>
+        <Link to={'/film-details'} state={movie} key={uid()}>
+          <div className="movie-card">
+            <img src={imgSources[movie.Name]} alt="poster" height={250} />
+            <h5>{movie.Name}</h5>
+          </div>
+        </Link>
       ))}
     </div>
   );
