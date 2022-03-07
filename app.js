@@ -23,10 +23,6 @@ app.use('/api', allRoutes);
 const authRoutes = require('./routes/auth/auth');
 app.use('/auth', authRoutes);
 
-// Prefix for all the presonal account routes
-const Account = require('./routes/account');
-app.use('/account', Account);
-
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require('./error-handling')(app);
 

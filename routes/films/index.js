@@ -1,6 +1,30 @@
 const router = require('express').Router();
-// const { query } = require('express');
 const User = require('../../models/User');
+
+// Get the users likeFilms array
+router.get('/:id', (req, res, next) => {
+  // Assign the id
+  const id = req.params.id;
+
+  // If no id or not long enough - respond with server error
+  if (!id || id.length !== 24) {
+    res.status(500).json({ errMessage: 'Internal server error. Invalid id.' });
+    return;
+  } else {
+    User.findById(id)
+      .then(userObj => {
+        // If no films in the array
+        if (!userObj.likedFilms.length) {
+          // Send error
+          res.status(404).send({ errMessage: 'No liked films yet.' });
+        } else {
+          // Send the array content
+          res.status(200).send(userObj.likedFilms);
+        }
+      })
+      .catch(err => next(err));
+  }
+});
 
 router.put('/add-film', (req, res, next) => {
   // Assign the id from the body

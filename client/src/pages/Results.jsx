@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { uid } from 'uid/single';
 import { AuthContext } from '../context/authContext';
 import axios from 'axios';
-const BACKEND_URL = 'http://localhost:5005 ';
 
 export default function Results() {
   const location = useLocation();
@@ -31,19 +30,22 @@ export default function Results() {
           // setQuery(data.Similar.Info[0].Name);
         })
         .catch(err => console.error(err));
-      // If the user is logged in and if there is a user object in the context
-      // Add the query (title of a liked movie) to the user document in DB
-      if (user && isLoggedIn) {
-        /* Have to create a backend route to add the query
-         to the user document in DB */
-        const requestBody = { id: user._id, filmTitle: query };
-        axios
-          .put(`http://localhost:5005/account/add-film`, requestBody)
-          .then()
-          .catch(err => console.error(err));
-      }
     }
   }, [query]);
+
+  useEffect(() => {
+    // If the user is logged in and if there is a user object in the context
+    // Add the query (title of a liked movie) to the user document in DB
+    if (user && isLoggedIn && query) {
+      /* Have to create a backend route to add the query
+         to the user document in DB */
+      const requestBody = { id: user._id, filmTitle: query };
+      axios
+        .put(`http://localhost:5005/api/films/add-film`, requestBody)
+        .then()
+        .catch(err => console.error(err));
+    }
+  }, [query, user, isLoggedIn]);
 
   // Retrieving the posters when the movie is added to the movies state
   useEffect(() => {
@@ -74,7 +76,7 @@ export default function Results() {
 
   return (
     <div>
-      <h2>If you liked {query} you migh also like:</h2>
+      {query && <h2>If you liked {query} you migh also like:</h2>}
       {movies.map(movie => (
         <div className="movie-card" key={uid()}>
           <img src={imgSources[movie.Name]} alt="poster" height={250} />

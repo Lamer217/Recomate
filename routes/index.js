@@ -11,8 +11,7 @@ router.get('/', (req, res, next) => {
 const remoteApi = require('./remote');
 router.use('/remote', remoteApi);
 
-// Auth middleware route prefix:
-// const AuthMiddleware = require('./auth/middleware');
-// router.use('/auth/middleware', AuthMiddleware);
-
+// Prefix for all the presonal account routes
+const Films = require('./films');
+router.use('/films', Films);
 module.exports = router;

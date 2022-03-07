@@ -16,7 +16,7 @@ export default function Preferences() {
   return (
     <div>
       <form onSubmit={handleQuery}>
-        <label htmlFor="">Input movie that you liked </label>
+        <label htmlFor="">Input a movie that you liked </label>
         {/* Getting the query from here */}
         <input type="text" onChange={e => setQuery(e.target.value)} />
       </form>
