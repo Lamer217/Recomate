@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-const BACKEND_URL = 'http://localhost:5005';
 
 const AuthContext = React.createContext();
 
@@ -25,7 +24,7 @@ function AuthProviderWrapper(props) {
       // We must send the JWT token in the 'Authorization' headers
       axios
         .get(
-          `${BACKEND_URL}/auth/verify`, // Calling the verify route from backend
+          `/auth/verify`, // Calling the verify route from backend
           // Adding a custom header to the get request
           { headers: { Authorization: `Bearer ${storedToken}` } }
         )

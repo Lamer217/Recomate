@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
-const BACKEND_URL = 'http://localhost:5005';
 
 export default function Signup({ setSignupForm, setLoginForm }) {
   const [username, setUsername] = useState('');
@@ -23,7 +22,7 @@ export default function Signup({ setSignupForm, setLoginForm }) {
     if (passRep === password) {
       // If yes - post the req.body to the backend route
       axios
-        .post(`${BACKEND_URL}/auth/signup`, reqBody)
+        .post(`/auth/signup`, reqBody)
         .then(response => {
           // Backend should respond with the 'created' code
           if (response.status === 201) {

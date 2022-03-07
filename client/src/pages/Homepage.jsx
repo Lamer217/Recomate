@@ -20,7 +20,7 @@ export default function Homepage() {
       // Call the backend and get the user Liked movies arr,
       // it will serve as the query
       axios
-        .get(`http://localhost:5005/api/films/${user._id}`)
+        .get(`/api/films/${user._id}`)
         .then(response => {
           // If there is anything in the array - pass it to query
           if (response.data.length) {

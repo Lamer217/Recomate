@@ -2,8 +2,6 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
 
-const BACKEND_URL = 'http://localhost:5005';
-
 export default function Login({ setSignupForm, setLoginForm }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +17,7 @@ export default function Login({ setSignupForm, setLoginForm }) {
     const reqBody = { username, password };
     // Post the request body to the login route on the backend
     axios
-      .post(`${BACKEND_URL}/auth/login`, reqBody)
+      .post(`/auth/login`, reqBody)
       .then(response => {
         // Backend should respond with the JWT string
         // console.log('JWT token', response.data.authToken);

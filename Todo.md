@@ -10,3 +10,4 @@
   - add signup route ✅
   - ✅ If user is signed in save the liked films to the user db document
   - ✅ If the user is logged in and opens the homepage he should be presented with the films that he would like
+- Add film details page

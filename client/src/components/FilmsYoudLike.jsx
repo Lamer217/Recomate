@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { uid } from 'uid/single';
+import axios from 'axios';
 
 export default function FilmsYoudLike({ query }) {
   const [movies, setMovies] = useState([]);
@@ -9,11 +10,11 @@ export default function FilmsYoudLike({ query }) {
   useEffect(() => {
     if (query) {
       // Call the backend remote route
-      fetch(`http://localhost:5005/api/remote/similar/movies/${query}`)
-        .then(response => response.json())
-        .then(data => {
+      axios
+        .get(`/api/remote/similar/movies/${query}`)
+        .then(response => {
           // Set movies to the response
-          setMovies(data.Similar.Results);
+          setMovies(response.data.Similar.Results);
         })
         .catch(err => console.error(err));
     }
@@ -23,10 +24,10 @@ export default function FilmsYoudLike({ query }) {
   useEffect(() => {
     if (movies.length) {
       movies.forEach(movie => {
-        fetch(`http://localhost:5005/api/remote/movies/search/${movie.Name}`)
-          .then(response => response.json())
-          .then(moviesArr => {
-            const posterArr = moviesArr
+        axios
+          .get(`/api/remote/movies/search/${movie.Name}`)
+          .then(response => {
+            const posterArr = response.data
               .filter(
                 retrievedMovie =>
                   retrievedMovie.title.toLowerCase() ===
