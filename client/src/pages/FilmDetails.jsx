@@ -30,7 +30,7 @@ export default function FilmDetail() {
     37: 'Western',
   };
   const [cast, setCast] = useState([]);
-  console.log(state);
+  // console.log(state);
 
   useEffect(() => {
     axios

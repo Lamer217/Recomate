@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import Preferences from '../components/Preferences';
 import Signup from '../components/Signup';
 import Login from '../components/Login';
 import { AuthContext } from '../context/authContext';
 import IsAnon from '../components/IsAnon';
 import FilmsYoudLike from '../components/FilmsYoudLike';
 import axios from 'axios';
+import Searchbar from '../components/Searchbar';
 
 export default function Homepage() {
   const [signupForm, setSignupForm] = useState(false);
@@ -63,7 +63,8 @@ export default function Homepage() {
           <button>Just let me see what else to watch</button>
         </IsAnon>
       )}
-      <Preferences />
+      {/* <Preferences /> */}
+      <Searchbar />
       {isLoggedIn && query && <FilmsYoudLike query={query} />}
     </>
   );

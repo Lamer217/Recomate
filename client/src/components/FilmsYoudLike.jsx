@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { uid } from 'uid/single';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function FilmsYoudLike({ query }) {
   const [movies, setMovies] = useState([]);
   const [imgSources, setImgSources] = useState({});
+  const currentPage = useLocation().pathname;
 
   // When the query get's passed, call the backend remote route to search for the query
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function FilmsYoudLike({ query }) {
                 retrievedMovie.title.toLowerCase() === movie.Name.toLowerCase()
             );
             movie.tmdbObj = tmdbFilmsArr[0];
-            console.log(movie);
+            // console.log(movie);
             const posterArr = tmdbFilmsArr.map(item => item.poster_path);
             posterArr.length
               ? setImgSources(imgSources => ({
@@ -52,7 +53,9 @@ export default function FilmsYoudLike({ query }) {
 
   return (
     <div>
-      <h2>Here's what the AI thinks you'd like:</h2>
+      {currentPage === '/results' || (
+        <h2>Here's what the AI thinks you'd like:</h2>
+      )}
       {movies.map(movie => (
         <Link to={'/film-details'} state={movie} key={uid()}>
           <div className="movie-card">
