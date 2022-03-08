@@ -24,4 +24,15 @@ router.get('/movies/search/:query', function (req, res, next) {
     .catch(err => next(err));
 });
 
+// Get the film's cast
+router.get('/movies/cast/:id', (req, res, next) => {
+  const id = req.params.id;
+  axios
+    .get(
+      `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${process.env.TMDB_API_KEY}`
+    )
+    .then(response => res.status(200).send(response.data.cast.slice(0, 5)))
+    .catch(err => err(next));
+});
+
 module.exports = router;

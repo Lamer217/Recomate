@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../../models/User');
+const axios = require('axios');
 
 // Get the users likeFilms array
 router.get('/:id', (req, res, next) => {
