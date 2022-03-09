@@ -78,7 +78,6 @@ export default function Homepage() {
           </div>
         </IsAnon>
       )}
-      {/* <Preferences /> */}
       <Searchbar />
       {isLoggedIn && query && <FilmsYoudLike query={query} />}
     </div>

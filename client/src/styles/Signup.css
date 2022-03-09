@@ -47,7 +47,6 @@
 
 .signup-card form > div input:focus,
 .signup-card form > div input:hover {
-  border-color: var(--sec-col);
   border-width: 1px;
   outline: none;
   box-shadow: inset 0 0 5px 2px var(--main-col);
