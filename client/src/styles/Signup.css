@@ -42,9 +42,11 @@
   border-color: var(--sec-col);
   border-width: 1px;
   width: 100%;
+  transition: all 400ms ease-out;
 }
 
-.signup-card form > div input:focus {
+.signup-card form > div input:focus,
+.signup-card form > div input:hover {
   border-color: var(--sec-col);
   border-width: 1px;
   outline: none;
