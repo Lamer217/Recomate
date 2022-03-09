@@ -88,7 +88,7 @@ export default function Signup({ setSignupForm, setLoginForm }) {
         </div>
       </form>
       <p>Already have an account?</p>
-      <button class="btn btn-sec" onClick={handleLogin}>
+      <button className="btn btn-sec" onClick={handleLogin}>
         Log in
       </button>
     </div>

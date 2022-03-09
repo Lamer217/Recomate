@@ -6,6 +6,7 @@ import IsAnon from '../components/IsAnon';
 import FilmsYoudLike from '../components/FilmsYoudLike';
 import axios from 'axios';
 import Searchbar from '../components/Searchbar';
+import Zoom from 'react-reveal/Zoom';
 import '../styles/Homepage.css';
 
 export default function Homepage() {
@@ -40,10 +41,12 @@ export default function Homepage() {
           <h4>Want Recomate to remember your taste?</h4>
           <div className="auth-btns-cont">
             {signupForm ? (
-              <Signup
-                setSignupForm={setSignupForm}
-                setLoginForm={setLoginForm}
-              />
+              <Zoom>
+                <Signup
+                  setSignupForm={setSignupForm}
+                  setLoginForm={setLoginForm}
+                />
+              </Zoom>
             ) : (
               loginForm || (
                 <button
@@ -56,10 +59,12 @@ export default function Homepage() {
             )}
             {loginForm || signupForm ? <span></span> : <h4>OR</h4>}
             {loginForm ? (
-              <Login
-                setSignupForm={setSignupForm}
-                setLoginForm={setLoginForm}
-              />
+              <Zoom>
+                <Login
+                  setSignupForm={setSignupForm}
+                  setLoginForm={setLoginForm}
+                />
+              </Zoom>
             ) : (
               signupForm || (
                 <button
