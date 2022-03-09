@@ -6,6 +6,7 @@ import YoutubeEmbed from '../components/YoutubeEmbed';
 
 export default function FilmDetail() {
   const state = useLocation().state;
+  console.log(state);
   const backdropUrl = state.tmdbObj.backdrop_path;
   const backdropSource = `https://image.tmdb.org/t/p/original${backdropUrl}`;
   const genres = {

@@ -35,7 +35,9 @@ export default function Homepage() {
 
   return (
     <div className="homepage">
-      <h1>Recomate &#8212; helps you find what else is worth watching</h1>
+      <h1 style={{ marginTop: isLoggedIn && '1.5rem' }}>
+        Recomate &#8212; helps you find what else is worth watching
+      </h1>
       {isLoggedIn || (
         <IsAnon>
           <h4>Want Recomate to remember your taste?</h4>

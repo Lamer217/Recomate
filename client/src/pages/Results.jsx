@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
 import axios from 'axios';
 import FilmsYoudLike from '../components/FilmsYoudLike';
+import '../styles/Results.css';
 
 export default function Results() {
   const location = useLocation();
@@ -24,7 +25,7 @@ export default function Results() {
   }, [query, user, isLoggedIn]);
 
   return (
-    <div>
+    <div className="results">
       {query && <h2>If you liked {query} you migh also like:</h2>}
       <FilmsYoudLike query={query} />
     </div>

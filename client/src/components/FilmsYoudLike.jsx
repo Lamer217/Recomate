@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { uid } from 'uid/single';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
+import '../styles/FilmsYoudLike.css';
 
 export default function FilmsYoudLike({ query }) {
   const [movies, setMovies] = useState([]);
@@ -43,7 +44,7 @@ export default function FilmsYoudLike({ query }) {
                 }))
               : setImgSources(imgSources => ({
                   ...imgSources,
-                  [movie.Name]: `${window.location.origin}/default_backdrop.jpg`,
+                  [movie.Name]: `${window.location.origin}/default_poster.jpg`,
                 }));
           })
           .catch(err => console.error(err));
@@ -52,18 +53,26 @@ export default function FilmsYoudLike({ query }) {
   }, [movies]);
 
   return (
-    <div>
+    <div className="films-youd-like">
       {currentPage === '/results' || (
         <h2>Here's what the AI thinks you'd like:</h2>
       )}
-      {movies.map(movie => (
-        <Link to={'/film-details'} state={movie} key={uid()}>
-          <div className="movie-card">
+      <div className="grid-container">
+        {movies.map(movie => (
+          <Link
+            to={'/film-details'}
+            state={movie}
+            key={uid()}
+            className="movie-card"
+          >
             <img src={imgSources[movie.Name]} alt="poster" height={250} />
-            <h5>{movie.Name}</h5>
-          </div>
-        </Link>
-      ))}
+            <div>
+              <h5>{movie.Name}</h5>
+              {movie.tmdbObj && <p>{movie.tmdbObj.overview}</p>}
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

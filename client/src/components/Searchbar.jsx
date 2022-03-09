@@ -42,7 +42,7 @@ export default function Searchbar() {
         onKeyPress={e => e.key === 'Enter' && handleSearch(e)}
         placeholder="Enter a movie you liked"
         autoFocus
-        autocomplete="off"
+        autoComplete="off"
       />
       <ul>
         {options.length > 0 &&
