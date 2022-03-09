@@ -6,6 +6,7 @@ import '../styles/SearchBar.css';
 export default function Searchbar() {
   const [options, setOptions] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const [query, setQuery] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,6 +18,19 @@ export default function Searchbar() {
     }
   }, [searchValue]);
 
+  // Sets the query value to first item title in options
+  // Query will be sent on Enter press from the input
+  useEffect(() => {
+    if (options.length) {
+      setQuery(options[0].title);
+    }
+  }, [options]);
+
+  // On enter press sends the movie title to the FilmsYoudLike
+  const handleSearch = () => {
+    navigate('/results', { state: query });
+  };
+
   return (
     <div className="searchbar">
       <input
@@ -25,18 +39,19 @@ export default function Searchbar() {
         id="searchValue"
         value={searchValue}
         onChange={e => setSearchValue(e.target.value)}
+        onKeyPress={e => e.key === 'Enter' && handleSearch(e)}
         placeholder="Enter a movie you liked"
         autoFocus
+        autocomplete="off"
       />
       <ul>
         {options.length > 0 &&
           searchValue.length > 2 &&
           options.map(option => {
             return (
-              <li>
+              <li key={option.id}>
                 <button
                   onClick={() => navigate('/results', { state: option.title })}
-                  key={option.id}
                 >
                   <img
                     src={`https://image.tmdb.org/t/p/w200${option.poster_path}`}
