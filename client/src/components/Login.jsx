@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
+import '../styles/Login.css';
 
 export default function Login({ setSignupForm, setLoginForm }) {
   const [username, setUsername] = useState('');
@@ -43,26 +44,32 @@ export default function Login({ setSignupForm, setLoginForm }) {
     <div className="login-card">
       <h2>Login</h2>
       <form onKeyPress={e => e.key === 'Enter' && handleLogin(e)}>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          onChange={e => setUsername(e.target.value)}
-          placeholder="Min 6 characters"
-          required
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          onChange={e => setPassword(e.target.value)}
-          placeholder="Min 8 characters"
-          required
-        />
+        <div>
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            onChange={e => setUsername(e.target.value)}
+            placeholder="Min 6 characters"
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Min 8 characters"
+            required
+          />
+        </div>
       </form>
       {message && <p>{message}</p>}
       <p>Don't have an account yet?</p>
-      <button onClick={handleSignup}>Sign Up for Free</button>
+      <button className="btn btn-sec" onClick={handleSignup}>
+        Sign Up
+      </button>
     </div>
   );
 }

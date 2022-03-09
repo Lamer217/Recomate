@@ -37,7 +37,7 @@ export default function Homepage() {
       <h1>Recomate &#8212; helps you find what else is worth watching</h1>
       {isLoggedIn || (
         <IsAnon>
-          <h4>Want Recomate to remember what you like?</h4>
+          <h4>Want Recomate to remember your taste?</h4>
           <div className="auth-btns-cont">
             {signupForm ? (
               <Signup

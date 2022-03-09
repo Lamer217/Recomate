@@ -7,7 +7,8 @@
 }
 
 .homepage > h4 {
-  padding: 2rem 1rem;
+  padding: 2rem 0 0 0;
+  font-size: 1.2rem;
 }
 
 .auth-btns-cont {
