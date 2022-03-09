@@ -6,6 +6,7 @@ import IsAnon from '../components/IsAnon';
 import FilmsYoudLike from '../components/FilmsYoudLike';
 import axios from 'axios';
 import Searchbar from '../components/Searchbar';
+import '../styles/Homepage.css';
 
 export default function Homepage() {
   const [signupForm, setSignupForm] = useState(false);
@@ -32,11 +33,12 @@ export default function Homepage() {
   }, [isLoggedIn, user]);
 
   return (
-    <>
-      <h1>Recomate - helps you find what else is worth watching</h1>
+    <div className="homepage">
+      <h1>Recomate &#8212; helps you find what else is worth watching</h1>
       {isLoggedIn || (
         <IsAnon>
-          <div>
+          <h4>Want Recomate to remember what you like?</h4>
+          <div className="auth-btns-cont">
             {signupForm ? (
               <Signup
                 setSignupForm={setSignupForm}
@@ -44,11 +46,15 @@ export default function Homepage() {
               />
             ) : (
               loginForm || (
-                <button onClick={() => setSignupForm(!signupForm)}>
+                <button
+                  className="btn btn-sec"
+                  onClick={() => setSignupForm(!signupForm)}
+                >
                   Sign up
                 </button>
               )
             )}
+            {loginForm || signupForm ? <span></span> : <h4>OR</h4>}
             {loginForm ? (
               <Login
                 setSignupForm={setSignupForm}
@@ -56,16 +62,20 @@ export default function Homepage() {
               />
             ) : (
               signupForm || (
-                <button onClick={() => setLoginForm(!loginForm)}>Login</button>
+                <button
+                  className="btn btn-sec"
+                  onClick={() => setLoginForm(!loginForm)}
+                >
+                  Login
+                </button>
               )
             )}
           </div>
-          <button>Just let me see what else to watch</button>
         </IsAnon>
       )}
       {/* <Preferences /> */}
       <Searchbar />
       {isLoggedIn && query && <FilmsYoudLike query={query} />}
-    </>
+    </div>
   );
 }

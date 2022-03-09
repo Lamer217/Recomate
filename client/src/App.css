@@ -1,6 +1,53 @@
-.App * {
+:root {
+  --main-col: #597ba0;
+  --main-col-dark: #486a8d;
+  --sec-col: #b8b8bb;
+  --sec-col-light: #e9ecf1;
+  --sec-col-lighter: #f6f7f9;
+  --text-col: #fff;
+  --text-col-sec: #49494a;
+  --shadow-color: 0deg 0% 0%;
+  --shadow-elevation-low: 0px 0.7px 0.7px hsl(var(--shadow-color) / 0.26),
+    0px 2.8px 2.6px -3.7px hsl(var(--shadow-color) / 0.17);
+  --shadow-elevation-medium: 0px 0.7px 0.7px hsl(var(--shadow-color) / 0.24),
+    0px 3px 2.8px -1.9px hsl(var(--shadow-color) / 0.19),
+    0px 14px 13.1px -3.7px hsl(var(--shadow-color) / 0.13);
+  --shadow-elevation-high: 0px 0.7px 0.7px hsl(var(--shadow-color) / 0.27),
+    0px 4.4px 4.1px -0.9px hsl(var(--shadow-color) / 0.23),
+    0px 13.2px 12.4px -1.9px hsl(var(--shadow-color) / 0.2),
+    0px 34px 31.9px -2.8px hsl(var(--shadow-color) / 0.16),
+    -0.1px 73.6px 69px -3.7px hsl(var(--shadow-color) / 0.12);
+}
+
+body * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Rubik', sans-serif;
+  color: var(--text-col-sec);
+}
+
+body {
+  background-color: var(--sec-col-light);
+}
+
+.btn {
+  display: inline-block;
+  font-size: 1rem;
+  border: var(--sec-col-light) 1px solid;
+  border-radius: 5px;
+  padding: 0.4rem 0.8rem;
+  border-top-color: #bac4d3;
+  box-shadow: var(--shadow-elevation-medium);
+  color: var(--text-col);
+  background-color: var(--main-col);
+  transition: background-color 500ms ease-out;
+}
+
+.btn:hover {
+  background-color: var(--main-col-dark);
+}
+
+.btn-sec {
+  background-color: var(--sec-col);
 }

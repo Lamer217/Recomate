@@ -1,0 +1,31 @@
+nav {
+  background-color: var(--main-col);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: var(--shadow-elevation-high);
+  position: sticky;
+  top: 0;
+}
+
+nav a {
+  color: var(--text-col);
+  text-decoration: none;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 2rem;
+}
+
+nav ul li:first-child {
+  margin-left: 2rem;
+}
+
+nav ul li:last-child > button {
+  background-color: var(--main-col);
+  color: var(--text-col);
+}

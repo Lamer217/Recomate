@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
+import '../styles/Signup.css';
 
 export default function Signup({ setSignupForm, setLoginForm }) {
   const [username, setUsername] = useState('');
@@ -55,33 +56,41 @@ export default function Signup({ setSignupForm, setLoginForm }) {
       <h2>Sign up</h2>
       {errMessage && <span>{errMessage}</span>}
       <form onKeyPress={e => e.key === 'Enter' && handleSignup(e)}>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          onChange={e => setUsername(e.target.value)}
-          placeholder="Min 6 characters"
-          required
-        />
+        <div>
+          <label htmlFor="username">Username </label>
+          <input
+            type="text"
+            id="username"
+            onChange={e => setUsername(e.target.value)}
+            placeholder="Min 6 characters"
+            required
+          />
+        </div>
         {message && <p>{message}</p>}
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          onChange={e => setPassword(e.target.value)}
-          placeholder="Min 8 characters"
-          required
-        />
-        <label htmlFor="passRep">Repeat your password:</label>
-        <input
-          type="password"
-          id="passRep"
-          onChange={e => setPassRep(e.target.value)}
-          required
-        />
+        <div>
+          <label htmlFor="password">Password </label>
+          <input
+            type="password"
+            id="password"
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Min 8 characters"
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="passRep">Repeat your password </label>
+          <input
+            type="password"
+            id="passRep"
+            onChange={e => setPassRep(e.target.value)}
+            required
+          />
+        </div>
       </form>
       <p>Already have an account?</p>
-      <button onClick={handleLogin}>Log in</button>
+      <button class="btn btn-sec" onClick={handleLogin}>
+        Log in
+      </button>
     </div>
   );
 }
