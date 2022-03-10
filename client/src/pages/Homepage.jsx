@@ -33,6 +33,15 @@ export default function Homepage() {
     }
   }, [isLoggedIn, user]);
 
+  // Clear the query when the user logs out
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setQuery('');
+    }
+  }, [isLoggedIn]);
+
+  console.log(query);
+
   return (
     <div className="homepage">
       <h1 style={{ marginTop: isLoggedIn && '1.5rem' }}>

@@ -53,8 +53,6 @@ export default function FilmsYoudLike({ query }) {
     }
   }, [movies]);
 
-  console.log(imgSources);
-
   return (
     <div className="films-youd-like">
       {currentPage === '/results' || (
