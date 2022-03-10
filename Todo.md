@@ -15,4 +15,4 @@
 - ✅ Try to do a dropdown search
 - ✅ Styling
 - ✅ dropdown search structure: ul li button
-- add frontend validation
+- ✅ add frontend validation
