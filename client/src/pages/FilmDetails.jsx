@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/FilmDetails.css';
 import YoutubeEmbed from '../components/YoutubeEmbed';
+import Fade from 'react-reveal/Fade';
 
 export default function FilmDetail() {
   const state = useLocation().state;
@@ -51,39 +52,41 @@ export default function FilmDetail() {
           : `url(${window.location.origin}/default_backdrop.jpg) no-repeat center center/cover`,
       }}
     >
-      <div className="wrapper">
-        <h1>{state.Name}</h1>
-        <div className="genres">
-          {state.tmdbObj.genre_ids.map(genreId => (
-            <span key={genreId}>{genres[genreId]}</span>
-          ))}
-        </div>
-        <div>
-          <h4>The cast: </h4>
-          <div className="cast-container">
-            {cast.length &&
-              cast.map(actor => (
-                <div key={actor.id}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${actor.profile_path}`}
-                    alt={actor.name}
-                    height="170"
-                  />
-                  <div>
-                    <h4>{actor.name}</h4>
+      <Fade durations={3000} delay={400}>
+        <div className="wrapper">
+          <h1>{state.Name}</h1>
+          <div className="genres">
+            {state.tmdbObj.genre_ids.map(genreId => (
+              <span key={genreId}>{genres[genreId]}</span>
+            ))}
+          </div>
+          <div>
+            <h4>The cast: </h4>
+            <div className="cast-container">
+              {cast.length &&
+                cast.map(actor => (
+                  <div key={actor.id}>
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${actor.profile_path}`}
+                      alt={actor.name}
+                      height="170"
+                    />
+                    <div>
+                      <h4>{actor.name}</h4>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+            </div>
+          </div>
+          <div>
+            <p>{fistrThreeSentences}.</p>
+            <div className="desc-iframe">
+              <p>{allOtherSentences}</p>
+              {state.yID && <YoutubeEmbed embedId={state.yID} />}
+            </div>
           </div>
         </div>
-        <div>
-          <p>{fistrThreeSentences}.</p>
-          <div className="desc-iframe">
-            <p>{allOtherSentences}</p>
-            {state.yID && <YoutubeEmbed embedId={state.yID} />}
-          </div>
-        </div>
-      </div>
+      </Fade>
     </div>
   );
 }
