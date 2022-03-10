@@ -31,7 +31,9 @@ export default function FilmDetail() {
     37: 'Western',
   };
   const [cast, setCast] = useState([]);
-  // console.log(state);
+
+  const fistrThreeSentences = state.wTeaser.split('.').slice(0, 3).join('.');
+  const allOtherSentences = state.wTeaser.split('.').slice(3).join('.');
 
   useEffect(() => {
     axios
@@ -45,35 +47,43 @@ export default function FilmDetail() {
       className="film-details"
       style={{
         background: backdropUrl
-          ? `url(${backdropSource}) no-repeat center/cover`
-          : `url(${window.location.origin}/default_backdrop.jpg) no-repeat center/cover`,
+          ? `url(${backdropSource}) no-repeat center center/cover`
+          : `url(${window.location.origin}/default_backdrop.jpg) no-repeat center center/cover`,
       }}
     >
-      <h1>{state.Name}</h1>
-      {state.tmdbObj.genre_ids.map(genreId => (
-        <span key={genreId}>{genres[genreId]}</span>
-      ))}
-      <div>
-        <h4>The cast: </h4>
-        {cast.length &&
-          cast.map(actor => (
-            <div key={actor.id}>
-              <img
-                src={`https://image.tmdb.org/t/p/original${actor.profile_path}`}
-                alt={actor.name}
-                height="170"
-              />
-              <h4>{actor.name}</h4>
-            </div>
+      <div className="wrapper">
+        <h1>{state.Name}</h1>
+        <div className="genres">
+          {state.tmdbObj.genre_ids.map(genreId => (
+            <span key={genreId}>{genres[genreId]}</span>
           ))}
-      </div>
-      <p>{state.wTeaser}</p>
-      {state.yID && (
-        <div>
-          <h4>Check out the trailer: </h4>
-          <YoutubeEmbed embedId={state.yID} />
         </div>
-      )}
+        <div>
+          <h4>The cast: </h4>
+          <div className="cast-container">
+            {cast.length &&
+              cast.map(actor => (
+                <div key={actor.id}>
+                  <img
+                    src={`https://image.tmdb.org/t/p/original${actor.profile_path}`}
+                    alt={actor.name}
+                    height="170"
+                  />
+                  <div>
+                    <h4>{actor.name}</h4>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+        <div>
+          <p>{fistrThreeSentences}.</p>
+          <div className="desc-iframe">
+            <p>{allOtherSentences}</p>
+            {state.yID && <YoutubeEmbed embedId={state.yID} />}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
