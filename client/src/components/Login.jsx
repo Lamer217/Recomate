@@ -7,13 +7,21 @@ export default function Login({ setSignupForm, setLoginForm }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [invalidUsername, setInvalidUsername] = useState(false);
+  const [invalidPassword, setInvalidPassword] = useState(false);
 
-  // Retrieving the function from the context
+  const usernameRegex = /^(?=[a-z_\d]*[a-z])[a-z_\d]{5,16}$/i;
+
+  const passwordRegex = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])([^\s]){8,16}$/gm;
+
+  // Retrieving the functions from the context
   const { storeToken, authenticateUser } = useContext(AuthContext);
 
   const handleLogin = e => {
     // Prevent the page from reload beacuse of the form submit
     e.preventDefault();
+    // Check if the inputs fulfill the validation
+    if (invalidUsername || invalidPassword) return;
     // Assign request body
     const reqBody = { username, password };
     // Post the request body to the login route on the backend
@@ -40,6 +48,31 @@ export default function Login({ setSignupForm, setLoginForm }) {
     setSignupForm(true);
   };
 
+  const handleUsernameChange = e => {
+    setUsername(e.target.value);
+    if (e.target.value && !usernameRegex.test(e.target.value)) {
+      setInvalidUsername(true);
+    } else {
+      setInvalidUsername(false);
+    }
+  };
+
+  const handlePasswordChange = e => {
+    setPassword(e.target.value);
+    if (e.target.value && !passwordRegex.test(e.target.value)) {
+      setInvalidPassword(true);
+    } else {
+      setInvalidPassword(false);
+    }
+  };
+
+  const invalidInputStyle = stateToCheck => {
+    if (stateToCheck)
+      return {
+        boxShadow: 'inset 0 0 5px 2px red',
+      };
+  };
+
   return (
     <div className="login-card">
       <h2>Login</h2>
@@ -49,9 +82,10 @@ export default function Login({ setSignupForm, setLoginForm }) {
           <input
             type="text"
             id="username"
-            onChange={e => setUsername(e.target.value)}
-            placeholder="Min 6 characters"
+            onChange={handleUsernameChange}
+            placeholder="Min 5 characters"
             required
+            style={invalidInputStyle(invalidUsername)}
           />
         </div>
         <div>
@@ -59,9 +93,10 @@ export default function Login({ setSignupForm, setLoginForm }) {
           <input
             type="password"
             id="password"
-            onChange={e => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             placeholder="Min 8 characters"
             required
+            style={invalidInputStyle(invalidPassword)}
           />
         </div>
       </form>

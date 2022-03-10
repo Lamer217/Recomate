@@ -40,8 +40,6 @@ export default function Homepage() {
     }
   }, [isLoggedIn]);
 
-  console.log(query);
-
   return (
     <div className="homepage">
       <h1 style={{ marginTop: isLoggedIn && '1.5rem' }}>
