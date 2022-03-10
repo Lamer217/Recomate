@@ -3,6 +3,7 @@ import { uid } from 'uid/single';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
 import '../styles/FilmsYoudLike.css';
+import '../../node_modules/placeholder-loading/src/scss/placeholder-loading.scss';
 
 export default function FilmsYoudLike({ query }) {
   const [movies, setMovies] = useState([]);
@@ -52,27 +53,62 @@ export default function FilmsYoudLike({ query }) {
     }
   }, [movies]);
 
+  console.log(imgSources);
+
   return (
     <div className="films-youd-like">
       {currentPage === '/results' || (
         <h2>Here's what the AI thinks you'd like:</h2>
       )}
-      <div className="grid-container">
-        {movies.map(movie => (
-          <Link
-            to={'/film-details'}
-            state={movie}
-            key={uid()}
-            className="movie-card"
-          >
-            <img src={imgSources[movie.Name]} alt="poster" height={250} />
-            <div>
-              <h5>{movie.Name}</h5>
-              {movie.tmdbObj && <p>{movie.tmdbObj.overview}</p>}
+      {Object.keys(imgSources).length < 20 ? (
+        <>
+          <div className="ph-item">
+            <div className="ph-col-3">
+              <div className="ph-picture"></div>
             </div>
-          </Link>
-        ))}
-      </div>
+            <div className="ph-col-3">
+              <div className="ph-picture"></div>
+            </div>
+            <div className="ph-col-3">
+              <div className="ph-picture"></div>
+            </div>
+            <div className="ph-col-3">
+              <div className="ph-picture"></div>
+            </div>
+          </div>
+          <div className="ph-item">
+            <div className="ph-col-3">
+              <div className="ph-picture"></div>
+            </div>
+            <div className="ph-col-3">
+              <div className="ph-picture"></div>
+            </div>
+            <div className="ph-col-3">
+              <div className="ph-picture"></div>
+            </div>
+            <div className="ph-col-3">
+              <div className="ph-picture"></div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="grid-container">
+          {movies.map(movie => (
+            <Link
+              to={'/film-details'}
+              state={movie}
+              key={uid()}
+              className="movie-card"
+            >
+              <img src={imgSources[movie.Name]} alt="poster" height={250} />
+              <div>
+                <h5>{movie.Name}</h5>
+                {movie.tmdbObj && <p>{movie.tmdbObj.overview}</p>}
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

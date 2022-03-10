@@ -64,3 +64,21 @@
 .movie-card > div p {
   overflow: hidden;
 }
+
+/* Loading placeholder */
+.ph-item {
+  background-color: var(--sec-col-light) !important;
+  border: none !important;
+  margin: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.films-youd-like .ph-item:last-child {
+  padding-top: 0 !important;
+}
+
+.ph-picture {
+  height: 400px !important;
+  border-radius: 7px !important;
+  width: 267px !important;
+}
