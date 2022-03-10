@@ -6,11 +6,18 @@ import '../styles/Signup.css';
 export default function Signup({ setSignupForm, setLoginForm }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [passRep, setPassRep] = useState('');
-  const [message, setMessage] = useState('');
   const [errMessage, setErrMessage] = useState('');
+  const [invalidUsername, setInvalidUsername] = useState(false);
+  const [invalidPassword, setInvalidPassword] = useState(false);
+  const [invalidPassRep, setInvalidPassRep] = useState(false);
 
-  const { storeToken, authenticateUser } = useContext(AuthContext);
+  const {
+    storeToken,
+    authenticateUser,
+    usernameRegex,
+    passwordRegex,
+    invalidInputStyle,
+  } = useContext(AuthContext);
 
   const handleSignup = e => {
     // Prevent page reload on form submission
@@ -20,7 +27,7 @@ export default function Signup({ setSignupForm, setLoginForm }) {
     const reqBody = { username, password };
 
     // Check if user had entered an intended password
-    if (passRep === password) {
+    if (!invalidUsername && !invalidPassword && !invalidPassRep) {
       // If yes - post the req.body to the backend route
       axios
         .post(`/auth/signup`, reqBody)
@@ -42,13 +49,33 @@ export default function Signup({ setSignupForm, setLoginForm }) {
           console.error(err);
         });
     } else {
-      setMessage("Passwords don't match");
+      return;
     }
   };
 
   const handleLogin = () => {
     setSignupForm(false);
     setLoginForm(true);
+  };
+
+  const handleUsernameChange = e => {
+    setUsername(e.target.value);
+    if (e.target.value && !usernameRegex(e.target.value)) {
+      setInvalidUsername(true);
+    } else setInvalidUsername(false);
+  };
+
+  const handlePasswordChange = e => {
+    setPassword(e.target.value);
+    if (e.target.value && !passwordRegex(e.target.value)) {
+      setInvalidPassword(true);
+    } else setInvalidPassword(false);
+  };
+
+  const handlePassRepChange = e => {
+    if (e.target.value && e.target.value !== password) {
+      setInvalidPassRep(true);
+    } else setInvalidPassRep(false);
   };
 
   return (
@@ -61,20 +88,21 @@ export default function Signup({ setSignupForm, setLoginForm }) {
           <input
             type="text"
             id="username"
-            onChange={e => setUsername(e.target.value)}
-            placeholder="Min 6 characters"
+            onChange={handleUsernameChange}
+            placeholder="Min 5 characters"
             required
+            style={invalidInputStyle(invalidUsername)}
           />
         </div>
-        {message && <p>{message}</p>}
         <div>
           <label htmlFor="password">Password </label>
           <input
             type="password"
             id="password"
-            onChange={e => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             placeholder="Min 8 characters"
             required
+            style={invalidInputStyle(invalidPassword)}
           />
         </div>
         <div>
@@ -82,8 +110,9 @@ export default function Signup({ setSignupForm, setLoginForm }) {
           <input
             type="password"
             id="passRep"
-            onChange={e => setPassRep(e.target.value)}
+            onChange={handlePassRepChange}
             required
+            style={invalidInputStyle(invalidPassRep)}
           />
         </div>
       </form>

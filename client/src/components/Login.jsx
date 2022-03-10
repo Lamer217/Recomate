@@ -10,12 +10,14 @@ export default function Login({ setSignupForm, setLoginForm }) {
   const [invalidUsername, setInvalidUsername] = useState(false);
   const [invalidPassword, setInvalidPassword] = useState(false);
 
-  const usernameRegex = /^(?=[a-z_\d]*[a-z])[a-z_\d]{5,16}$/i;
-
-  const passwordRegex = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])([^\s]){8,16}$/gm;
-
   // Retrieving the functions from the context
-  const { storeToken, authenticateUser } = useContext(AuthContext);
+  const {
+    storeToken,
+    authenticateUser,
+    usernameRegex,
+    passwordRegex,
+    invalidInputStyle,
+  } = useContext(AuthContext);
 
   const handleLogin = e => {
     // Prevent the page from reload beacuse of the form submit
@@ -50,7 +52,7 @@ export default function Login({ setSignupForm, setLoginForm }) {
 
   const handleUsernameChange = e => {
     setUsername(e.target.value);
-    if (e.target.value && !usernameRegex.test(e.target.value)) {
+    if (e.target.value && !usernameRegex(e.target.value)) {
       setInvalidUsername(true);
     } else {
       setInvalidUsername(false);
@@ -59,18 +61,11 @@ export default function Login({ setSignupForm, setLoginForm }) {
 
   const handlePasswordChange = e => {
     setPassword(e.target.value);
-    if (e.target.value && !passwordRegex.test(e.target.value)) {
+    if (e.target.value && !passwordRegex(e.target.value)) {
       setInvalidPassword(true);
     } else {
       setInvalidPassword(false);
     }
-  };
-
-  const invalidInputStyle = stateToCheck => {
-    if (stateToCheck)
-      return {
-        boxShadow: 'inset 0 0 5px 2px red',
-      };
   };
 
   return (

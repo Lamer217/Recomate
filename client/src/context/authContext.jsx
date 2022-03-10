@@ -72,6 +72,21 @@ function AuthProviderWrapper(props) {
     authenticateUser();
   };
 
+  // Regex validators
+  const usernameRegex = username =>
+    /^(?=[a-z_\d]*[a-z])[a-z_\d]{5,16}$/i.test(username);
+
+  const passwordRegex = password =>
+    /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])([^\s]){8,16}$/gm.test(password);
+
+  // Function for input 'error' style
+  const invalidInputStyle = stateToCheck => {
+    if (stateToCheck)
+      return {
+        boxShadow: 'inset 0 0 5px 2px red',
+      };
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -81,6 +96,9 @@ function AuthProviderWrapper(props) {
         storeToken,
         authenticateUser,
         logoutUser,
+        usernameRegex,
+        passwordRegex,
+        invalidInputStyle,
       }}
     >
       {props.children}
