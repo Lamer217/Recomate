@@ -23,10 +23,15 @@ nav ul {
 }
 
 nav ul li:first-child {
-  margin-left: 2rem;
+  /* margin-left: 2rem; */
 }
 
 nav ul li:last-child > button {
   background-color: var(--main-col);
   color: var(--text-col);
+}
+
+nav .inline-logo,
+nav .mini-logo {
+  height: 40px;
 }

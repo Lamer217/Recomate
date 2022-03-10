@@ -9,6 +9,8 @@ import Searchbar from '../components/Searchbar';
 import Zoom from 'react-reveal/Zoom';
 import '../styles/Homepage.css';
 
+const mainLogo = `${window.location.origin}/logo-main.png`;
+
 export default function Homepage() {
   const [signupForm, setSignupForm] = useState(false);
   const [loginForm, setLoginForm] = useState(false);
@@ -42,9 +44,14 @@ export default function Homepage() {
 
   return (
     <div className="homepage">
-      <h1 style={{ marginTop: isLoggedIn && '1.5rem' }}>
-        Recomate &#8212; helps you find what else is worth watching
-      </h1>
+      {loginForm || signupForm || (
+        <>
+          <img src={mainLogo} alt="main logo" />
+          <h1 style={{ marginTop: isLoggedIn && '1.5rem' }}>
+            helps you find what else is worth watching
+          </h1>
+        </>
+      )}
       {isLoggedIn || (
         <IsAnon>
           <h4>Want Recomate to remember your taste?</h4>

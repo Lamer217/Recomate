@@ -3,6 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
 import '../styles/Navbar.css';
 
+const inlineLogo = `${window.location.origin}/logo-inline.png`;
+const miniLogo = `${window.location.origin}/logo-mini.png`;
+
 export default function Navbar() {
   const { logoutUser, isLoggedIn } = useContext(AuthContext);
   const currentPage = useLocation().pathname;
@@ -12,16 +15,35 @@ export default function Navbar() {
     <nav>
       <ul
         style={{
-          justifyContent: onHomePage ? 'flex-end' : 'space-between',
+          justifyContent: 'space-between',
           padding: !isLoggedIn && onHomePage && '0',
         }}
       >
         {/* Display link to homepage if on other page */}
-        {onHomePage || (
+        {/* {onHomePage || (
           <li className="btn">
             <Link to="/">Home</Link>
           </li>
+        )} */}
+        {/* If on homepage - display inline logo, else mini logo */}
+        {onHomePage ? (
+          <li>
+            <Link to="/">
+              <img
+                src={inlineLogo}
+                alt="recomate logo"
+                className="inline-logo"
+              />
+            </Link>
+          </li>
+        ) : (
+          <li>
+            <Link to="/">
+              <img src={miniLogo} alt="recomate logo" className="mini-logo" />
+            </Link>
+          </li>
         )}
+
         {/* Display logout only if the user is logged in */}
         {isLoggedIn && (
           <li>

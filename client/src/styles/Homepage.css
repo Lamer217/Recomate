@@ -7,6 +7,17 @@
   overflow: hidden;
 }
 
+.homepage > img {
+  height: 40vh;
+}
+
+.homepage > h1 {
+  text-transform: uppercase;
+  color: var(--main-col);
+  font-weight: 500;
+  font-size: 2rem;
+}
+
 .homepage > h4 {
   padding: 2rem 0 0 0;
   font-size: 1.2rem;
