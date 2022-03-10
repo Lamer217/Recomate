@@ -47,11 +47,15 @@
 }
 
 .wrapper > div:nth-child(3) {
-  /* background-color: red; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+}
+
+.wrapper > div:nth-child(3) > h4 {
+  text-transform: uppercase;
+  margin-left: 3px;
 }
 
 .cast-container {
@@ -87,7 +91,7 @@
   padding: 0.5rem;
   height: 100%;
   width: 100%;
-  justify-content: space-around;
+  justify-content: flex-end;
   background-color: var(--sec-col-light);
   opacity: 0;
   border-radius: 7px;
@@ -104,21 +108,14 @@
 }
 
 .wrapper > div:last-child > p {
-  /* background-color: red; */
   text-align: right;
 }
 
 .desc-iframe {
   display: flex;
   flex-direction: row-reverse;
-  /* justify-content: center; */
 }
 
 .desc-iframe p {
   text-align: right;
 }
-
-/* .wrapper > div:last-child {
-  background-color: red;
-  display: flex;
-} */

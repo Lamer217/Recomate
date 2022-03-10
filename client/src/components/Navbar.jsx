@@ -12,13 +12,13 @@ export default function Navbar() {
   const onHomePage = currentPage === '/';
 
   return (
-    <nav>
-      <ul
-        style={{
-          justifyContent: 'space-between',
-          padding: !isLoggedIn && onHomePage && '0',
-        }}
-      >
+    <nav
+      style={{
+        display: !isLoggedIn && onHomePage && 'none',
+        marginBottom: isLoggedIn && onHomePage && '1.5rem',
+      }}
+    >
+      <ul>
         {/* Display link to homepage if on other page */}
         {/* {onHomePage || (
           <li className="btn">

@@ -61,7 +61,7 @@ export default function FilmDetail() {
             ))}
           </div>
           <div>
-            <h4>The cast: </h4>
+            <h4>cast: </h4>
             <div className="cast-container">
               {cast.length &&
                 cast.map(actor => (
