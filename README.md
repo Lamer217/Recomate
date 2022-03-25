@@ -1,4 +1,7 @@
-# Recomate &mdash; Film suggestion app
+![Recomate logo](https://user-images.githubusercontent.com/62716818/160145478-5319d6fc-1cf6-4650-9de4-378e8001fb16.png)
+
+# Recomate &mdash; Film suggestion app.
+
 
 ## The app is developed with the use of MERN stack technologies
 
