@@ -7,6 +7,8 @@
 
 The app can recommend a film that you would most likely enjoy according to either your direct input or, if you have an account, films that you've checked in the app so far. You can check the film's synopsis, cast, genres and trailer.
 
+In its core the app leverages the Tastedive API for the suggestion functionality and TMDB API to fetch particular film data
+
 ## How to contribute to the Recomate:
 
 ‼ You need Git and Node installed in your system
